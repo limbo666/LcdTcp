@@ -2,8 +2,9 @@
 
 This project is a high-performance WiFi-based Text LCD interface for ESP8266, designed to work seamlessly with **LCD Smartie** and other compatible software.
 
-### Rermarks
-Thsi version of firmware requires the latest driver to be used 
+### Remarks
+This version of firmware requires the latest driver to be used on LCD Smartie. 
+Drive is available on the following repo release pages:  https://github.com/limbo666/LcdTcpDll
 
 ### Credits
 

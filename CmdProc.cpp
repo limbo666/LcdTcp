@@ -1,5 +1,9 @@
 #include "LcdTcp.h"
 
+#define CMD_LCD_SET_GPO 0x0C
+#define CMD_LCD_SET_FAN 0x0D
+
+
 #define EVENT_FRAME_FLAG 0x776E //ASCII:"wn"
 
 #define CMD_LCD_INIT 0x01
@@ -44,6 +48,7 @@ int Protocol_Process(unsigned char *Buf)
 	switch (Buf[0])
 	{
 	case CMD_LCD_INIT:
+	// This Re-Constructs the object with the NEW size sent by the PC
 		lcd = LiquidCrystal_I2C(I2C_LCD_ADDR, Buf[1], Buf[2], LCD_5x8DOTS);
 		lcd.begin();
 		lcd.clear();
@@ -118,7 +123,31 @@ int Protocol_Process(unsigned char *Buf)
 	case CMD_LCD_DE_INIT:
 		LcdShowStandby();
 
+
 		break;
+
+
+	case CMD_LCD_SET_GPO:
+		// Buf[1] = Index (1-8), Buf[2] = State (0/1)
+		Serial.printf("CMD_LCD_SET_GPO: Pin=%d, State=%d\n", Buf[1], Buf[2]);
+		
+		// We only have one GPO pin (D0) for now.
+		// You can map Index 1 to D0.
+		if (Buf[1] == 1) {
+		    digitalWrite(16, Buf[2]); // 16 is D0
+		}
+		break;
+
+	case CMD_LCD_SET_FAN:
+		// Buf[1] = FanID, Buf[2] = Speed (0-255)
+		Serial.printf("CMD_LCD_SET_FAN: ID=%d, Speed=%d\n", Buf[1], Buf[2]);
+		
+		// Map Fan 1 to D8 (GPIO 15)
+		if (Buf[1] == 1) {
+		    analogWrite(15, Buf[2]); // 15 is D8 (PWM supported)
+		}
+		break;
+
 	case CMD_ENTER_BOOT:
 
 	default:

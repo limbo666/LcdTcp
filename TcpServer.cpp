@@ -51,6 +51,9 @@ void TcpServerProc(void)
 			}
 		}
 	}
+
+
+
 	//check UART for data
 	//  if(Serial.available()){
 	//    size_t len = Serial.available();
@@ -65,3 +68,17 @@ void TcpServerProc(void)
 	//    }
 	//  }
 }
+
+void BroadcastKeyToHost(uint8_t key)
+{
+	for (uint8_t i = 0; i < MAX_SRV_CLIENTS; i++)
+	{
+		// Send to any connected client
+		if (serverClients[i] && serverClients[i].connected())
+		{
+			serverClients[i].write(key);
+			Serial.printf("Sent Key: %c (%d)\n", key, key);
+		}
+	}
+}
+

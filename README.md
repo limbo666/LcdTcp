@@ -40,7 +40,7 @@ This project is a fork of the original work by **eeyrw** ([GitHub Profile](https
 
 Before uploading, you **must** configure your hardware in `I2C_LCD_ADDR_CFG.h`
 1.  **I2C Address:** Set `#define I2C_LCD_ADDR` to your backpack address (usually `0x27` or `0x3F`).    
-2.  **Screen Size:** Uncomment exactly **one** line that matches your screen (e.g., `#define LCD_SIZE_4x40`)7.
+2.  **Screen Size:** Uncomment exactly **one** line that matches your screen (e.g., `#define LCD_SIZE_4x40`).
     
 
 ### 3. Uploading

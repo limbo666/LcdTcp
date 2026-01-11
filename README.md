@@ -1,43 +1,76 @@
-# Wifi2LCD
-The wifi text lcd device based on ESP8266. 
-Check the demo: https://www.youtube.com/watch?v=m8xoZjNyYmA
-or https://www.bilibili.com/video/av19397782/
+# Wifi2LCD - Enhanced Version Stable
 
-## Hardware
-Check the following link :
-https://lceda.cn/cocoyuan/wifi-lcd
+This project is a high-performance WiFi-based Text LCD interface for ESP8266, designed to work seamlessly with **LCD Smartie** and other compatible software.
 
-## Firmware [![Build Status](https://travis-ci.org/eeyrw/LcdTcp.svg?branch=master)](https://travis-ci.org/eeyrw/LcdTcp) [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)]() [![GitHub version](https://badge.fury.io/gh/eeyrw%2FLcdTcp.svg)](https://badge.fury.io/gh/eeyrw%2FLcdTcp)
-The firmware is based on ESP8266 Arduino core and several libraries. Currently the firmware is built by travis ci and release the binary in the GitHub release page.
+### Rermarks
+Thsi version of firmware requires the latest driver to be used 
 
-**Config firmware**
+### Credits
 
-IMPORTANT!!!
-You should config the address of you I2C LCD module at first at the file `I2C_LCD_ADDR_CFG.h`. Otherwise you may encounter the mysterious bug.
+This project is a fork of the original work by **eeyrw** ([GitHub Profile](https://github.com/eeyrw)). Many thanks to him for providing the excellent foundation for this TCP-to-I2C bridge.
 
-**Build firmware**
+----------
 
-1. Install Arduino IDE. 
-2. Install ESP8266 core ( Check this [link](https://github.com/esp8266/Arduino)  ) .
-3. Install libraries (`WiFiManager` by inside library manager of Arduino IDE.
-4. Open the LcdTcp.ino with Arduino IDE and specify the board `NodeMCU 1.0 ESP-12E` and other parameters should be set accordingly.
-5. Click verify button.
+## Key Enhancements in this Version
 
-Also, if you are interested in building with [makeEspArduino](https://github.com/plerup/makeEspArduino) , you can check the https://github.com/plerup/makeEspArduino and config.mk in the project root. Generally, you should run `git submodule update --init --recursive` and run `make -f ./makeEspArduino/makeEspArduino.mk -j7` to build.
+-   **Expanded Hardware Support:** Added native support for **4x40** (Dual Controller) displays, alongside 1x16, 2x16, 4x20, and 2x40.        
+-   **Integrated I/O System:** Support for **4 physical buttons** (sending keys to PC) and **2 Outputs** (GPO and PWM Fan control)    
+-   **Stability Fixes:** Optimized TCP handling to prevent ESP8266 crashes during high-traffic updates.    
+-   **Dynamic Boot Screens:** Professional startup layouts tailored to the detected screen size.  
 
-**Upload firmware**
+----------
 
-If you choose Arduino IDE, the correct COM port should be set. After that, click upload button. You can upload binary through esptool in the scenario that you just want to upload bin from release page to ESP8266 . The following steps can be taken:
-1. If you have not python 3, then get it. Because upload tool is written in python.
-2. Run `pip install esptool` .  Installing this tool manually is also feasible and check https://github.com/espressif/esptool to learn how to do .
-3. Run `esptool --port YOUR_COM_PORT --baud YOUR_BAUD_RATE write_flash 0x0 BIN_PATH`  
+## Build & Setup (Arduino IDE)
 
+### 1. Prerequisites
 
+-   **Arduino IDE** installed.
+    
+-   **ESP8266 Core** installed (via Boards Manager).
+    
+-   **Libraries:**
+    
+    -   `WiFiManager` (Install via Library Manager).
+        
+    -   `LiquidCrystal_I2C` (The modified version included in this repository is required for 4x40 support)
+        
 
+### 2. Configuration (Mandatory)
 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzODkyMTYxOTcsMjA3ODM4ODg4N119
--->
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MzQxNjgzMTNdfQ==
--->
+Before uploading, you **must** configure your hardware in `I2C_LCD_ADDR_CFG.h`
+1.  **I2C Address:** Set `#define I2C_LCD_ADDR` to your backpack address (usually `0x27` or `0x3F`).    
+2.  **Screen Size:** Uncomment exactly **one** line that matches your screen (e.g., `#define LCD_SIZE_4x40`)7.
+    
+
+### 3. Uploading
+
+1.  Open `LcdTcp.ino`    
+2.  Select your board (e.g., **Wemos D1 Mini** or **NodeMCU 1.0**)    
+3.  Click **Upload**.
+    
+
+----------
+
+## Hardware Pinout (Wemos D1 Mini)
+
+|Component|Pin|Function|
+|--|--|--|
+|I2C LCD  | D1 (SCL) / D2 (SDA)  |Standard Screen Connection   |
+| Button 1-4 |D5, D6, D7, D3  |Connect between Pin and GND  |
+| GPO Out |D0  |Connect between Pin and GND  |Digital On/Off|
+| Fan Out |D8  |PWM Speed/0-255 Control |
+|--|--|--|
+
+Note: Avoid holding the button on D3 during power-up as it may enter Flash Mode14.
+
+----------
+
+## Usage
+
+1.  **WiFi Setup:** On first boot, the ESP will create an AP named **"LCD TCP WIFI CONFIG"**. Connect with your phone to set your home WiFi credentials.    
+2.  **Display:** Once connected, the screen will display the **Local IP Address**    
+3.  **PC Connection:** Use the matching `LcdTcpDll.dll` in your **LCD Smartie** "displays" folder. Configure the DLL with the IP address shown on the LCD.    
+
+### License
+
+This project is released under the **MIT License**, following the licensing applied by the original author.

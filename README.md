@@ -8,7 +8,7 @@ Drive is available on the following repo release pages:  https://github.com/limb
 
 ### Credits
 
-This project is a fork of the original work by **eeyrw** ([GitHub Profile](https://github.com/eeyrw)). Many thanks to him for providing the excellent foundation for this TCP-to-I2C bridge.
+This project is a fork of the original work by  [**eeyrw**](https://github.com/eeyrw). Many thanks to him for providing the excellent foundation for this TCP-to-I2C bridge.
 
 ----------
 

@@ -12,6 +12,11 @@ This project is a fork of the original work by  [**eeyrw**](https://github.com/e
 
 ----------
 
+## LCD Smartie driver
+A fully compatible LCD Smartie display driver for this hardware can be found on https://github.com/limbo666/LcdTcpDll
+
+----------
+
 ## Key Enhancements in this Version
 
 -   **Expanded Hardware Support:** Added native support for **4x40** (Dual Controller) displays, alongside 1x16, 2x16, 4x20, and 2x40.        
